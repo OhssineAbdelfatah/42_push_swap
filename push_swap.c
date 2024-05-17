@@ -1,62 +1,87 @@
 #include "push_swap.h"
-int str_to_int(char *str,int i){
-    int num;
-    num = 0 ;
-    while(str[i] && !is_spase(str[i])){
-        num = num*10 + str[i] + 48;
-        i++;
-    }
-    return num;
+
+t_node *creat_node(int num){
+    t_node *node;
+
+    node = (t_node*)malloc(sizeof(t_node));
+    if(!node)
+        throw_error("node allocation failed.");
+    node->data = num;
+    node->next = NULL;
+    return node;
 }
 
-int is_space(char c){
-    if(c == ' ' || c == '\t')
-        return 1;
-    else 
-        return 0;
-}
-
-int is_num()
-
-int check_input_1(char *str,t_node **head){ // one arg string
-    int i ;
-
-    i = 0;
-    while(is_space(str[i++]) == 1);
-
-}
-
-t_node **init_stack(){ 
-
-    t_node *head ;
-    t_node node ;
-
-    node.data = 0;
-    node.next = NULL;
-    head = malloc(1 *sizeof(t_node));
-    head = &node;
-    return &head;
-}
-
-void add_node(t_node **head, t_node node){
+void add_to_stack(t_node *node, t_node **head){
     t_node *tmp;
 
+    if(*head == NULL){
+        *head = node;
+        return ;
+    }
     tmp = *head;
+    while(tmp->next != NULL)
+        tmp = tmp->next;
+    
+    tmp->next = node;
+    return ;
+}
 
+void push_swap(char **args, int argc){
+    // int i;
+    t_node *stack_a ;
+    t_node *stack_b ;
+    t_node *tmp ;
+
+    stack_a = fill_args(args, argc);
+    stack_b = NULL;
+
+
+    tmp = stack_a;
+    ft_printf("stack a original:\n");
     while(tmp != NULL){
+        ft_printf("stack_a %d\n",tmp->data);
         tmp = tmp->next;
     }
-    tmp->next = &node;
-    return;
-} 
 
-int check_input_2(char *)// many args
-{
-    
+    return ;
+
+    // print satck a
+    tmp = stack_a;
+        ft_printf("stack_a \n");
+    while(tmp != NULL){
+        ft_printf(" %d ",tmp->data);
+        tmp = tmp->next;
+    }
+
+    // print satck b
+    tmp = stack_b;
+        ft_printf("\nstack_b\n");
+    while(tmp != NULL){
+        ft_printf(" %d ",tmp->data);
+        tmp = tmp->next;
+    }
+    ft_printf("\n");
 
 }
 
-int main(){
-
-    if(check_input())
+int main(int argc, char **argv){
+    if(argc >= 2){
+        // int i = 0;
+        // char **args = ft_split(argv[1], ' ');
+        // while(args[i] != NULL){
+            // ft_putstr_fd(args[i++] ,1 );
+            // ft_putstr_fd("\n" ,1 );
+        // }
+        
+        if(check_args(argc, argv) == -1){
+            ft_putstr_fd("error.\n",2);
+            return 0;
+        }
+        else
+            ft_putstr_fd("OK.\n",1);
+        push_swap(argv,argc);
+        while(1);
+    }else
+        ft_printf("error too few args.\n");
+        
 }
