@@ -6,6 +6,29 @@
 
 
 // atoi
+
+
+int check_double(t_node *head)
+{
+    t_node *tmp;
+    t_node *tmp1;
+
+    tmp = head;
+    while(tmp->next != NULL)
+    {
+        tmp1 = tmp->next ;
+        while(tmp1->next != NULL)
+        {
+            ft_printf("tmp %d tmp1 %d \n",tmp->data,tmp1->data);
+            if(tmp1->data == tmp->data)
+                return -1;
+            tmp1 = tmp1->next ;
+        }
+        tmp = tmp->next ;
+    }
+    return 0;
+}
+
 int is_space(char c)
 {
     if(c == ' ' || (c >= 13 && c <= 9))
@@ -39,13 +62,13 @@ int check_args(int len, char **argv)
     i = 0 ;
     while(++i < len)
     {
-        if( argv[i][0] == '\0' || flag == j )
+        if( argv[i][0] == '\0' )
             return -1;
         j = -1 ;
         flag = 0;
         while(argv[i][++j])
         {
-            if(is_sign_doubled(argv[i][j],argv[i][j+1]))
+            if(is_sign_doubled(argv[i][j],argv[i][j+1]) || (ft_isdigit(argv[i][j]) && is_sign(argv[i][j+1]) ) )
                 return -1;
             if(is_sign(argv[i][j]) && ( is_sign(argv[i][j+1]) || is_space(argv[i][j+1]) ))
                 return -1;
@@ -56,11 +79,14 @@ int check_args(int len, char **argv)
             if(is_space(argv[i][j]))
                 flag++;
         }
+        if(flag == j )
+            return -1;
     }
     return 0;
 }
 
-t_node *fill_args(char **argv, int argc){
+t_node *fill_args(char **argv, int argc)
+{
     int i;
     (void)argc;
     int j;
@@ -88,8 +114,15 @@ t_node *fill_args(char **argv, int argc){
         free(arg[j]);
         free(arg);
     }
+    check_double(head);
+      //  ft_putstr_fd("doubled check!\n",1);
     return head;
 }
+
+/* void free_stack(t_node *head)
+{
+
+} */
 
 //split
 

@@ -33,6 +33,8 @@ void push_swap(char **args, int argc){
     t_node *tmp ;
 
     stack_a = fill_args(args, argc);
+    if(stack_a == NULL)
+        return ;
     stack_b = NULL;
 
 
@@ -80,7 +82,6 @@ int main(int argc, char **argv){
         else
             ft_putstr_fd("OK.\n",1);
         push_swap(argv,argc);
-        while(1);
     }else
         ft_printf("error too few args.\n");
         
