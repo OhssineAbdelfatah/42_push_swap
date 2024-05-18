@@ -1,8 +1,8 @@
 #include"push_swap.h"
 
 // to be check
-    // double number
-    // max-min int
+    // double number done
+    // max-min int ...
 
 
 // atoi
@@ -17,9 +17,8 @@ int check_double(t_node *head)
     while(tmp->next != NULL)
     {
         tmp1 = tmp->next ;
-        while(tmp1->next != NULL)
+        while(tmp1 != NULL)
         {
-            ft_printf("tmp %d tmp1 %d \n",tmp->data,tmp1->data);
             if(tmp1->data == tmp->data)
                 return -1;
             tmp1 = tmp1->next ;
@@ -85,10 +84,9 @@ int check_args(int len, char **argv)
     return 0;
 }
 
-t_node *fill_args(char **argv, int argc)
+t_node *fill_args(char **argv )
 {
     int i;
-    (void)argc;
     int j;
     long nbr;
     char **arg;
@@ -98,11 +96,7 @@ t_node *fill_args(char **argv, int argc)
     head =NULL;
     i = 0;
     while(argv[++i]){
-        ft_putstr_fd("argv i \n" ,1);
-        ft_putstr_fd(argv[i] ,1);
-        ft_putstr_fd("\n" ,1);
         arg = ft_split(argv[i], ' ');
-        ft_putstr_fd("\n" ,1);
         j = -1;
         while(arg[++j])
         {
@@ -114,15 +108,27 @@ t_node *fill_args(char **argv, int argc)
         free(arg[j]);
         free(arg);
     }
-    check_double(head);
-      //  ft_putstr_fd("doubled check!\n",1);
+    if(check_double(head) == -1){
+       ft_putstr_fd("doubled check!\n",1);
+        return NULL;
+    }
     return head;
 }
 
-/* void free_stack(t_node *head)
+void free_stack(t_node *head)
 {
+    t_node *tmp;
 
-} */
+    tmp = head->next;
+    while(tmp->next != NULL)
+    {
+        free(head);
+        head = tmp;
+        tmp = tmp->next;
+    }
+    free(tmp);
+    return ;
+}
 
 //split
 

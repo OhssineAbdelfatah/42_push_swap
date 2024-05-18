@@ -41,8 +41,9 @@ char is_sign_doubled(char a, char b);
 int is_space(char c);
 int check_args(int len, char **argv);
 int is_sign(char c);
-t_node *fill_args(char **argv, int argc);
+t_node *fill_args(char **argv);
 int check_double(t_node *head);
+void free_stack(t_node *head);
 
 
 #endif

@@ -31,8 +31,8 @@ void push_swap(char **args, int argc){
     t_node *stack_a ;
     t_node *stack_b ;
     t_node *tmp ;
-
-    stack_a = fill_args(args, argc);
+    (void)argc;
+    stack_a = fill_args(args);
     if(stack_a == NULL)
         return ;
     stack_b = NULL;
@@ -44,7 +44,8 @@ void push_swap(char **args, int argc){
         ft_printf("stack_a %d\n",tmp->data);
         tmp = tmp->next;
     }
-
+    free_stack(stack_a);
+    while (1);
     return ;
 
     // print satck a
