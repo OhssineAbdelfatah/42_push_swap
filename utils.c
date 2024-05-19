@@ -51,3 +51,21 @@ char	*ft_itoa(int n)
 	}
 	return (nbr);
 }
+
+
+int	lstsize(t_node *lst)
+{
+	t_node	*temp;
+	int		i;
+
+	i = 0;
+	temp = lst;
+	if (lst == NULL)
+		return (0);
+	while ((temp)->next != NULL)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return (++i);
+}

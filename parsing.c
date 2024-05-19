@@ -7,6 +7,13 @@
 
 // atoi
 
+int is_max(long nbr)
+{
+    if(nbr > 2147483647 ||  nbr < -2147483648)
+        return 1;
+    else 
+        return 0;
+}
 
 int check_double(t_node *head)
 {
@@ -100,7 +107,11 @@ t_node *fill_args(char **argv )
         j = -1;
         while(arg[++j])
         {
-            nbr = ft_atoi(arg[j]);
+            nbr = ft_atol(arg[j]);
+            if(is_max(nbr)){
+                ft_putstr_fd("max checked! error !\n",1);
+                return NULL;
+            }
             node = creat_node((int)nbr);
             add_to_stack(node, &head);
             free(arg[j]);
@@ -109,7 +120,7 @@ t_node *fill_args(char **argv )
         free(arg);
     }
     if(check_double(head) == -1){
-       ft_putstr_fd("doubled check!\n",1);
+        ft_putstr_fd("doubled check!\n",1);
         return NULL;
     }
     return head;
@@ -120,15 +131,52 @@ void free_stack(t_node *head)
     t_node *tmp;
 
     tmp = head->next;
-    while(tmp->next != NULL)
+    while(tmp != NULL)
     {
         free(head);
         head = tmp;
         tmp = tmp->next;
     }
-    free(tmp);
+    free(head);
     return ;
 }
 
+static int	space_sign(const char *s, int *sign)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && (s[i] == 32 || (s[i] < 14 && s[i] > 8)))
+		i++;
+	if (s[i] && (s[i] == '-' || s[i] == '+'))
+	{
+		if (s[i] == '-')
+			*sign *= (-1);
+		i++;
+	}
+	return (i);
+}
+long	ft_atol(const char *str)
+{
+	int					i;
+	int					sign;
+	unsigned long long	result;
+	unsigned long long	temp;
+
+	result = 0;
+	sign = 1;
+	i = space_sign(str, &sign);
+	while (str[i] <= '9' && str[i] >= '0')
+	{
+		temp = result;
+		result = result * 10 + str[i] - 48;
+		// if (temp != result / 10 && sign == -1)
+		// 	return (0);
+		// else if (temp != result / 10 && sign == 1)
+		// 	return (0);
+		i++;
+	}
+	return (result * sign);
+}
 //split
 

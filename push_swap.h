@@ -14,8 +14,8 @@ typedef struct s_node {
 //utils
 
 char	*ft_itoa(int n);
-// static size_t	count_size(int nbr);
 void throw_error(char *str);
+int	lstsize(t_node *lst);
 
 
 // push swap
@@ -44,6 +44,13 @@ int is_sign(char c);
 t_node *fill_args(char **argv);
 int check_double(t_node *head);
 void free_stack(t_node *head);
+long	ft_atol(const char *str);
+int is_max(long nbr);
+
+// sort
+void sort_3_nbr(t_node **head);
+void sort_5_nbr(t_node **stack_a, t_node **stack_b);
+void find_min_pb(t_node **stack_a, t_node **stack_b);
 
 
 #endif

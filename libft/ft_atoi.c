@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aohssine <aohssine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aohssine <aohssine@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:53:39 by aohssine          #+#    #+#             */
-/*   Updated: 2024/05/17 18:35:51 by aohssine         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:52:26 by aohssine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_atoi(const char *str)
 		if (temp != result / 10 && sign == -1)
 			return (0);
 		else if (temp != result / 10 && sign == 1)
-			return (0);
+			return (-1);
 		i++;
 	}
 	return ((int)result * sign);

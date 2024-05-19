@@ -37,7 +37,7 @@ void push_swap(char **args, int argc){
         return ;
     stack_b = NULL;
 
-
+    sort_5_nbr(&stack_a, &stack_b);
     tmp = stack_a;
     ft_printf("stack a original:\n");
     while(tmp != NULL){
@@ -45,16 +45,16 @@ void push_swap(char **args, int argc){
         tmp = tmp->next;
     }
     free_stack(stack_a);
-    while (1);
+    // while (1);
     return ;
 
     // print satck a
-    tmp = stack_a;
-        ft_printf("stack_a \n");
-    while(tmp != NULL){
-        ft_printf(" %d ",tmp->data);
-        tmp = tmp->next;
-    }
+    // tmp = stack_a;
+    //     ft_printf("stack_a \n");
+    // while(tmp != NULL){
+    //     ft_printf(" %d ",tmp->data);
+    //     tmp = tmp->next;
+    // }
 
     // print satck b
     tmp = stack_b;
