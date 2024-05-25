@@ -67,7 +67,7 @@ void sort_5_nbr(t_node **stack_a, t_node **stack_b);
 void find_min_pb(t_node **stack_a, t_node **stack_b);
 
 // algo 
-
+int find_min(t_node *stack_b);
 t_node *count_move_a(t_node *stack_a);
 int find_max_indice(t_node *stack_b);
 t_node *count_move_b(t_node *stack_b, t_node *stack_a);

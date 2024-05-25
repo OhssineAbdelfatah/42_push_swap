@@ -34,7 +34,7 @@ t_node *count_move_b(t_node *stack_b, t_node *stack_a)
     // // int to_push = INT32_MAX;
 
     if(stack_b == NULL)
-        return 0;
+        return stack_a;
 
     // Find the indexe of the nearest number to big_a in stack B.
     tmp_a = stack_a;
@@ -55,23 +55,21 @@ t_node *count_move_b(t_node *stack_b, t_node *stack_a)
             tmp_b = tmp_b->next;
             i++;
         }
+
         if(value == INT32_MIN)
             indice = find_max_indice(stack_b);
         tmp_a->ind_b = indice ;
         if(indice > lstsize (stack_b)/2)
         {
             tmp_a->side_b = true;
-            tmp_a->move += lstsize(stack_b) - indice ;
+            tmp_a->move = tmp_a->move + lstsize(stack_b) - indice ;
         }
         else
-            tmp_a->move += indice;  
+            tmp_a->move = tmp_a->move + indice;  
         tmp_a = tmp_a->next;
     }
     return stack_a;
 }
-
-
-
 
 int find_max_indice(t_node *stack_b)
 {
@@ -91,4 +89,18 @@ int find_max_indice(t_node *stack_b)
         i++;
     }
     return indice;
+} 
+
+int find_min(t_node *stack_b)
+{
+    int min;
+
+    min = 2147483647 ;
+    while(stack_b != NULL)
+    {
+        if(stack_b->data < min)
+            min = stack_b->data;
+        stack_b = stack_b->next;
+    }
+    return min;
 } 

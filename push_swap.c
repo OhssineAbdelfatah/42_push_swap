@@ -11,8 +11,8 @@ t_node *creat_node(int num){
     node->side_b = false;
     node->next = NULL;
     node->move = 0;
-    node->ind_a = 0;
-    node->ind_b = 0;
+    node->ind_a = INT32_MAX;
+    node->ind_b = INT32_MAX;
     return node;
 }
 
@@ -36,7 +36,6 @@ void push_swap(char **args)
     t_node *stack_a ;
     t_node *stack_b ;
     // t_node *best_node;
-    t_node *tmp_a;
     int best_move;
 
     stack_a = fill_args(args);
@@ -44,15 +43,14 @@ void push_swap(char **args)
         return ;
     stack_b = NULL;
 
-    pb(&stack_a, &stack_b);
-    pb(&stack_a, &stack_b);
-    tmp_a = stack_a;
+    // pb(&stack_a, &stack_b);
+    // pb(&stack_a, &stack_b);
 
-    while(tmp_a != NULL)
+    while(stack_a != NULL)
     {
         // stack_a = count_move_a(stack_a);
-        tmp_a = count_move_b(stack_b, tmp_a);
-        best_move = INT32_MAX;
+        stack_a = count_move_b(stack_b, stack_a);
+        // best_move = INT32_MAX;
         // tmp_a = stack_a;
 
        /*  while(tmp_a != NULL)
@@ -82,9 +80,10 @@ void push_swap(char **args)
         } */
         
 
-        best_move = tmp_a->move;
+        best_move = stack_a->move;
+        ft_printf("best {%d} \n",best_move );
         while(best_move-- > 0){
-            if(tmp_a->side_b)
+            if(stack_a->side_b)
                 rrb(&stack_b);
             else
                 rb(&stack_b);
@@ -92,7 +91,7 @@ void push_swap(char **args)
   
         // set up stack b , to best position to push node from a
 
-        pb(&tmp_a, &stack_b);
+        pb(&stack_a, &stack_b);
         // tmp_a = tmp_a->next;
     }
     
@@ -103,7 +102,7 @@ void push_swap(char **args)
 
     // operate over stack b till it is Descending order head: max >>> min 
 
-    int max_b_ind = find_max_indice(stack_b);
+    /* int max_b_ind = find_max_indice(stack_b);
     if(max_b_ind > lstsize(stack_b))
     {   
         max_b_ind = lstsize(stack_b) - max_b_ind;
@@ -112,14 +111,14 @@ void push_swap(char **args)
     }else{
         while(max_b_ind-- > 0)
             rb(&stack_b);
-    }
+    } */
 
     // push back all sorted elements to a
-    while(stack_b != NULL){
-        pa(&stack_b, &tmp_a);
-    }
+    /* while(stack_b != NULL){
+        pa(&stack_b, &stack_a);
+    } */
 
-    print(tmp_a, stack_b);
+    print(stack_a, stack_b);
     // free all allocaated nodes
     /*  free_stack(stack_a); */
 
