@@ -81,18 +81,15 @@ void push_swap(char **args)
                 ra(&stack_a);
         } */
         
-        if(tmp_a->side_b)
-        {   
-            best_move = tmp_a->ind_b - lstsize(stack_b);
-            while(best_move-- > 0)
+
+        best_move = tmp_a->move;
+        while(best_move-- > 0){
+            if(tmp_a->side_b)
                 rrb(&stack_b);
-        }
-        else
-        {
-            best_move = tmp_a->ind_b;
-            while(best_move-- > 0)
+            else
                 rb(&stack_b);
         }
+  
         // set up stack b , to best position to push node from a
 
         pb(&tmp_a, &stack_b);
