@@ -2,25 +2,29 @@
 #define PUSH_SWAP_H
 
 #include<stdlib.h>
+#include<stdbool.h>
 #include"ft_printf/ft_printf.h"
 #include"libft/libft.h"
 
+typedef struct s_res {
+    int value;
+    int error;
+} t_res;
+
+typedef struct s_push{
+    int target;
+    int base;
+} t_push;
 
 typedef struct s_node {
     int data;
+    int ind_a;
+    int ind_b;
+    int move;
+    bool side_a;
+    bool side_b;
     struct s_node *next;
 } t_node ; 
-
-//utils
-
-char	*ft_itoa(int n);
-void throw_error(char *str);
-int	lstsize(t_node *lst);
-
-
-// push swap
-t_node *creat_node(int num);
-void add_to_stack(t_node *node, t_node **head);
 
 // rules 
 void    sa(t_node **stack_a);
@@ -47,10 +51,29 @@ void free_stack(t_node *head);
 long	ft_atol(const char *str);
 int is_max(long nbr);
 
+//utils
+char	*ft_itoa(int n);
+void throw_error(char *str);
+int	lstsize(t_node *lst);
+
+// push swap
+t_node *creat_node(int num);
+void add_to_stack(t_node *node, t_node **head);
+void print(t_node *stack_a, t_node *stack_b);
+
 // sort
 void sort_3_nbr(t_node **head);
 void sort_5_nbr(t_node **stack_a, t_node **stack_b);
 void find_min_pb(t_node **stack_a, t_node **stack_b);
+
+// algo 
+
+t_node *count_move_a(t_node *stack_a);
+int find_max_indice(t_node *stack_b);
+t_node *count_move_b(t_node *stack_b, t_node *stack_a);
+
+// sort to b 
+void sort_stack_b(t_node **stack_a, t_node **stack_b);
 
 
 #endif

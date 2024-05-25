@@ -1,6 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = push_swap.c rules.c utils.c parsing.c sort.c
+SRC = push_swap.c rules.c utils.c parsing.c sort.c algo.c \
+		sort_to_b.c
 		
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a

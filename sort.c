@@ -41,7 +41,6 @@ void find_min_pb(t_node **stack_a, t_node **stack_b)
         i_min++;
         tmp = tmp->next;
     } 
-    ft_printf("-------{%d} \n",flag);
     if(i_min == 0)
         pb(stack_a, stack_b);
     else if(i_min == 4 ){

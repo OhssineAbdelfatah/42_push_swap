@@ -34,7 +34,7 @@ rrr : rra and rrb at the same time.
 */
 
 void sa(t_node **stack_a){
-    ft_printf("\n*\nsa\n*\n");
+    ft_printf("sa\n");
     if(stack_a == NULL )
         return ;
     t_node *tmp;
@@ -46,7 +46,7 @@ void sa(t_node **stack_a){
 }
 
 void sb(t_node **stack_b){
-    ft_printf("\n*\nsb\n*\n");
+    ft_printf("sb\n");
     if(stack_b == NULL )
         return ;
     t_node *tmp;
@@ -58,7 +58,7 @@ void sb(t_node **stack_b){
 }
 
 void ss(t_node *stack_a, t_node *stack_b){
-    ft_printf("\n*\nss\n*\n");
+    ft_printf("ss\n");
     if(stack_b == NULL && stack_a == NULL)
         return ;
     sa(&stack_a);
@@ -67,36 +67,33 @@ void ss(t_node *stack_a, t_node *stack_b){
 }
 
 void pb(t_node **stack_a, t_node **stack_b){
-    ft_printf("\n*\npb\n*\n");
+    ft_printf("pb\n");
     t_node *node_b;
-
+    
     if(*stack_a == NULL)
         return ;
     node_b = *stack_a;
-    // node_b->next = NULL;
     *stack_a = (*stack_a)->next;
-    ft_printf("new stack a head %d \n",(*stack_a)->data);
     node_b->next = *stack_b;
     *stack_b = node_b;
     return ;
 }
 
 void pa(t_node **stack_b, t_node **stack_a){
-    ft_printf("\n*\npa\n*\n");
+    ft_printf("pa\n");
     t_node *node_a;
 
     if(*stack_b == NULL)
         return ;
     node_a = *stack_b;
-    // node_b->next = NULL;
     *stack_b = (*stack_b)->next;
-    ft_printf("new stack a head %d \n",(*stack_a)->data);
     node_a->next = *stack_a;
     *stack_a = node_a;
     return ;
 }
 
 void ra(t_node **stack_a){
+    ft_printf("ra\n");
     t_node *tmp;
     t_node *last;
 
@@ -113,6 +110,7 @@ void ra(t_node **stack_a){
 }
 
 void rb(t_node **stack_b){
+    ft_printf("rb\n");
     t_node *tmp;
     t_node *last;
 
@@ -129,6 +127,7 @@ void rb(t_node **stack_b){
 }
 
 void rr(t_node **stack_a, t_node **stack_b){
+    ft_printf("rr\n");
     if(stack_a != NULL && *stack_a != NULL)
         ra(stack_a);
     if(stack_b != NULL && *stack_b != NULL)
@@ -137,6 +136,7 @@ void rr(t_node **stack_a, t_node **stack_b){
 }
 
 void rra(t_node **stack_a){
+    ft_printf("rra\n");
     t_node *tmp;
     t_node *last;
 
@@ -153,6 +153,7 @@ void rra(t_node **stack_a){
 }
 
 void rrb(t_node **stack_b){
+    ft_printf("rrb\n");
     t_node *tmp;
     t_node *last;
 

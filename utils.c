@@ -58,10 +58,10 @@ int	lstsize(t_node *lst)
 	t_node	*temp;
 	int		i;
 
-	i = 0;
-	temp = lst;
 	if (lst == NULL)
 		return (0);
+	i = 0;
+	temp = lst;
 	while ((temp)->next != NULL)
 	{
 		i++;

@@ -109,7 +109,7 @@ t_node *fill_args(char **argv )
         {
             nbr = ft_atol(arg[j]);
             if(is_max(nbr)){
-                ft_putstr_fd("max checked! error !\n",1);
+                ft_putstr_fd("max checked : ERROR !\n",1);
                 return NULL;
             }
             node = creat_node((int)nbr);
@@ -120,9 +120,11 @@ t_node *fill_args(char **argv )
         free(arg);
     }
     if(check_double(head) == -1){
-        ft_putstr_fd("doubled check!\n",1);
+        ft_putstr_fd("doubled check : ERROR!\n",1);
         return NULL;
     }
+    // ft_putstr_fd("doubled check : OK!\n",1);
+    // ft_putstr_fd("max checked : OK !\n",1);
     return head;
 }
 
@@ -170,10 +172,6 @@ long	ft_atol(const char *str)
 	{
 		temp = result;
 		result = result * 10 + str[i] - 48;
-		// if (temp != result / 10 && sign == -1)
-		// 	return (0);
-		// else if (temp != result / 10 && sign == 1)
-		// 	return (0);
 		i++;
 	}
 	return (result * sign);
