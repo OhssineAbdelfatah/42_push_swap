@@ -1,6 +1,7 @@
 #include"push_swap.h"
 
-void throw_error(char *str){
+void throw_error(char *str)
+{
     ft_printf("%s\n",str);
     exit(0);
 }
@@ -52,7 +53,6 @@ char	*ft_itoa(int n)
 	return (nbr);
 }
 
-
 int	lstsize(t_node *lst)
 {
 	t_node	*temp;
@@ -69,3 +69,5 @@ int	lstsize(t_node *lst)
 	}
 	return (++i);
 }
+
+

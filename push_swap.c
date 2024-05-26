@@ -73,76 +73,14 @@ void push_swap(char **args)
 {
     t_node *stack_a ;
     t_node *stack_b ;
-    int best_move;
 
+    stack_b = NULL;
     stack_a = fill_args(args);
     if(stack_a == NULL)
         return ;
-    stack_b = NULL;
-
-    while(lstsize(stack_a) > 3)
-    {
-        set_stack_to_zero(&stack_a);
-        set_stack_to_zero(&stack_b);
-        stack_a->ind = count_move(stack_b, stack_a->data);
-        if(stack_a->ind == -1)
-            stack_a->ind = find_max_indice(stack_b);
-        if(stack_a->ind > lstsize(stack_b)/2 )
-        {
-            stack_a->side = true;
-            stack_a->move = lstsize(stack_b) - stack_a->ind ;
-        }
-        else
-            stack_a->move =  stack_a->ind ;
-        best_move = stack_a->move;
-        while(best_move-- > 0)
-        {
-            if( stack_a->side )
-                rra_rrb(&stack_b, 'b');
-            else
-                ra_rb(&stack_b,'b');
-        }
-        pa_pb(&stack_a, &stack_b,'b');
-    }
-
+    push_min_to_b(&stack_a, &stack_b); // add inside push in best move
     sort_3_nbr(&stack_a);
 
-    while(stack_b != NULL)
-    {
-        set_stack_to_zero(&stack_a);
-        set_stack_to_zero(&stack_b);
-        stack_b->ind = count_move_a(stack_a, stack_b->data);
-        if(stack_b->ind == -1)
-                stack_b->ind = find_min(stack_a);
-        if(stack_b->ind > lstsize(stack_a)/2 )
-        {
-            stack_b->side = true;
-            stack_b->move = lstsize(stack_a) - stack_b->ind ;
-        }
-        else
-            stack_b->move =  stack_b->ind ;
-        best_move = stack_b->move;
-        while(best_move-- > 0)
-        {
-            if( stack_b->side )
-                rra_rrb(&stack_a, 'a');
-            else
-                ra_rb(&stack_a, 'a');
-        }
-        pa_pb(&stack_b, &stack_a,'a');
-
-    }
-
-    best_move = find_min(stack_a);
-    if(best_move > lstsize(stack_a)/2 ){
-        best_move = lstsize(stack_a) - best_move;
-        while(best_move-- > 0)
-            rra_rrb(&stack_a,'a');
-    }else{
-        while(best_move-- > 0)
-            ra_rb(&stack_a,'a');
-    }
-    // free all allocaated nodes
     free_stack(stack_a);
 
     return ;
