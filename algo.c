@@ -1,7 +1,7 @@
 #include "push_swap.h"
 
 // useful   
-t_node *count_move_a(t_node *stack_a)
+/* t_node *count_move_a(t_node *stack_a)
 {
     int pos ;
     t_node *tmp;
@@ -11,9 +11,9 @@ t_node *count_move_a(t_node *stack_a)
     tmp = stack_a;
     while(tmp != NULL)
     {
-        tmp->ind_a = pos ;
+        // tmp->ind_a = pos ;
         if(pos > lstsize(stack_a)/2){
-            tmp->side_a = true;
+            // tmp->side_a = true;
             tmp->move += (lstsize(stack_a) - pos);
         }
         else
@@ -22,11 +22,11 @@ t_node *count_move_a(t_node *stack_a)
         pos++;
     }
     return stack_a ;
-}
+} */
 
-t_node *count_move_b(t_node *stack_b, t_node *stack_a)
+t_node *count_move_b(t_node __unused *stack_b, t_node __unused **stack_a)
 {
-    t_node *tmp_b;
+   /*  t_node *tmp_b;
     t_node *tmp_a;
     int indice ;
     int i ;
@@ -34,7 +34,7 @@ t_node *count_move_b(t_node *stack_b, t_node *stack_a)
     // // int to_push = INT32_MAX;
 
     if(stack_b == NULL)
-        return stack_a;
+        return ;
 
     // Find the indexe of the nearest number to big_a in stack B.
     tmp_a = stack_a;
@@ -55,20 +55,22 @@ t_node *count_move_b(t_node *stack_b, t_node *stack_a)
             tmp_b = tmp_b->next;
             i++;
         }
-
         if(value == INT32_MIN)
             indice = find_max_indice(stack_b);
         tmp_a->ind_b = indice ;
         if(indice > lstsize (stack_b)/2)
         {
             tmp_a->side_b = true;
-            tmp_a->move = tmp_a->move + lstsize(stack_b) - indice ;
+            tmp_a->move =  lstsize(stack_b) - indice ;
         }
         else
-            tmp_a->move = tmp_a->move + indice;  
+            tmp_a->move = indice;  
+        // ft_printf("move_a{%d} ind_a{%d} \n", tmp_a->move, tmp_a->ind_a, tmp_a->ind_b, tmp_a->side );
         tmp_a = tmp_a->next;
     }
-    return stack_a;
+
+    return stack_a; */
+    return NULL;
 }
 
 int find_max_indice(t_node *stack_b)
@@ -76,17 +78,21 @@ int find_max_indice(t_node *stack_b)
     int max;
     int indice;
     int i = 0 ;
+    t_node *tmp;
 
+    if(stack_b == NULL)
+        return 0;
     max = stack_b->data ;
-    while(stack_b != NULL)
+    tmp = stack_b;
+    while(tmp != NULL)
     {
-        if(stack_b->data > max)
+        if(tmp->data > max)
         {
-            max = stack_b->data;
+            max = tmp->data;
             indice = i;
         }
-        stack_b = stack_b->next;
         i++;
+        tmp = tmp->next;
     }
     return indice;
 } 
@@ -94,13 +100,74 @@ int find_max_indice(t_node *stack_b)
 int find_min(t_node *stack_b)
 {
     int min;
+    int indice;
+    int i = 0 ;
+    t_node *tmp;
 
-    min = 2147483647 ;
-    while(stack_b != NULL)
+    if(stack_b == NULL)
+        return 0;
+    min = stack_b->data ;
+    tmp = stack_b;
+    while(tmp != NULL)
     {
-        if(stack_b->data < min)
-            min = stack_b->data;
-        stack_b = stack_b->next;
+        if(tmp->data < min)
+        {
+            min = tmp->data;
+            indice = i;
+        }
+        i++;
+        tmp = tmp->next;
     }
-    return min;
+    return indice;
 } 
+
+
+int count_move(t_node *stack_b, int ref)
+{
+    int ind;
+    int i;
+    int min;
+    t_node *tmp;
+
+    min = INT32_MIN;
+    i = 0 ;
+    tmp = stack_b;
+    while(tmp != NULL)
+    {
+        if( tmp->data > min && tmp->data < ref)
+        {
+            min = tmp->data;
+            ind = i;
+        }
+        i++;
+        tmp = tmp->next;
+    }
+    if(min == INT32_MIN)
+        return -1;
+    return ind;
+}
+
+int count_move_a(t_node *stack_a, int ref)
+{
+    int ind;
+    int i;
+    int max;
+    t_node *tmp;
+
+    max = INT32_MAX;
+    i = 0 ;
+    tmp = stack_a;
+    while(tmp != NULL)
+    {
+        if( tmp->data < max && tmp->data > ref)
+        {
+            max = tmp->data;
+            ind = i;
+        }
+        i++;
+        tmp = tmp->next;
+    }
+    if(max == INT32_MAX)
+        return -1;
+    return ind;
+}

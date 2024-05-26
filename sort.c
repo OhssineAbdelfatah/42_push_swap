@@ -2,70 +2,60 @@
 
 void sort_3_nbr(t_node **head)
 {
+    if(lstsize(*head) != 3)
+        return ;
     if( (*head)->data > (*head)->next->data )
-        sa(head);
+        sa_sb(head, 'a');
     if( (*head)->next->data > (*head)->next->next->data )
     {
-        rra(head);
-        sa(head);
+        rra_rrb(head,'a');
+        sa_sb(head, 'a');
     }
     if( (*head)->data > (*head)->next->data )
-        sa(head);
+        sa_sb(head,'a');
 }
 
 void find_min_pb(t_node **stack_a, t_node **stack_b)
 {
     t_node *tmp;
     int min;
-    int i_min;
-    int flag;
+    int indice;
+    int i;
+    bool side;
     
-    flag = lstsize(*stack_a);
-    i_min = 0;
-    min = (*stack_a)->data   ;
-
-
-    tmp = *stack_a;
-    while(tmp != NULL)
+    i = 0;
+    indice = 0;
+    side = false;
+    min = (*stack_a)->data;
+    tmp = (*stack_a)->next;
+    while (tmp != NULL)
     {
-        if(min > tmp->data)
-            min =  tmp->data;
+        if(tmp->data < min){
+            min = tmp->data ;
+            indice = i;
+        }   
+        i++;
         tmp = tmp->next;
-    } 
-
-    tmp = *stack_a;
-    while(tmp != NULL)
-    {
-        if(min == tmp->data)
-            break;
-        i_min++;
-        tmp = tmp->next;
-    } 
-    if(i_min == 0)
-        pb(stack_a, stack_b);
-    else if(i_min == 4 ){
-        rra(stack_a);
-        pb(stack_a, stack_b);
-    }else if(i_min == 3 && flag == 5){
-        rra(stack_a);
-        rra(stack_a);
-        pb(stack_a, stack_b);
-    }else if(i_min == 3 && flag == 4){
-        rra(stack_a);
-        pb(stack_a, stack_b);
-    }else if( i_min == 2){
-        ra(stack_a);
-        ra(stack_a);
-        pb(stack_a, stack_b);
-    }else if ( i_min == 1){
-        ra(stack_a);
-        pb(stack_a, stack_b);
     }
-    
+    if(indice > lstsize(*stack_a)/2)
+    {
+        indice = lstsize(*stack_a)/2 - indice ;
+        side = true;
+    }
+    while(indice-- > 0)
+    {
+        if(side)
+            rra_rrb(stack_a, 'a');
+        else
+            ra_rb(stack_a, 'a');
+    }
+    pa_pb(stack_a, stack_b, 'b');
+    return ;
 }
 void sort_5_nbr(t_node **stack_a, t_node **stack_b)
 {
     t_node *tmp;
+    find_min_pb(stack_a,stack_b);
     find_min_pb(stack_a,stack_b);
        // print satck a
     tmp = *stack_a;
@@ -83,6 +73,6 @@ void sort_5_nbr(t_node **stack_a, t_node **stack_b)
         tmp = tmp->next;
     }
     sort_3_nbr(stack_a);
-    pa(stack_b, stack_a);
-    pa(stack_b, stack_a);
+    pa_pb(stack_b, stack_a, 'a');
+    pa_pb(stack_b, stack_a, 'a');
 }

@@ -1,64 +1,5 @@
 #include"push_swap.h"
 
-// to be check
-    // double number done
-    // max-min int ...
-
-
-// atoi
-
-int is_max(long nbr)
-{
-    if(nbr > 2147483647 ||  nbr < -2147483648)
-        return 1;
-    else 
-        return 0;
-}
-
-int check_double(t_node *head)
-{
-    t_node *tmp;
-    t_node *tmp1;
-
-    tmp = head;
-    while(tmp->next != NULL)
-    {
-        tmp1 = tmp->next ;
-        while(tmp1 != NULL)
-        {
-            if(tmp1->data == tmp->data)
-                return -1;
-            tmp1 = tmp1->next ;
-        }
-        tmp = tmp->next ;
-    }
-    return 0;
-}
-
-int is_space(char c)
-{
-    if(c == ' ' || (c >= 13 && c <= 9))
-        return 1;
-    else
-        return 0;
-}
-
-int is_sign(char c)
-{
-    if(c == '-' || c == '+')
-        return 1;
-    else 
-        return 0;
-}
-
-char is_sign_doubled(char a, char b)
-{
-    if( (a == '-' && b == '-' ) || (a == '+' && b == '+' ))
-        return 1;
-    else
-        return 0;
-}
-
 int check_args(int len, char **argv)
 {
     int i;
@@ -108,10 +49,8 @@ t_node *fill_args(char **argv )
         while(arg[++j])
         {
             nbr = ft_atol(arg[j]);
-            if(is_max(nbr)){
-                ft_putstr_fd("max checked : ERROR !\n",1);
+            if(is_max(nbr))
                 return NULL;
-            }
             node = creat_node((int)nbr);
             add_to_stack(node, &head);
             free(arg[j]);
@@ -119,12 +58,8 @@ t_node *fill_args(char **argv )
         free(arg[j]);
         free(arg);
     }
-    if(check_double(head) == -1){
-        ft_putstr_fd("doubled check : ERROR!\n",1);
+    if(check_double(head) == -1)
         return NULL;
-    }
-    // ft_putstr_fd("doubled check : OK!\n",1);
-    // ft_putstr_fd("max checked : OK !\n",1);
     return head;
 }
 
@@ -176,5 +111,4 @@ long	ft_atol(const char *str)
 	}
 	return (result * sign);
 }
-//split
 

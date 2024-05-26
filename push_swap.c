@@ -1,22 +1,38 @@
 #include "push_swap.h"
 
-t_node *creat_node(int num){
+t_node *creat_node(int num)
+{
     t_node *node;
 
     node = (t_node*)malloc(sizeof(t_node));
     if(!node)
         throw_error("node allocation failed.");
     node->data = num;
-    node->side_a = false;
-    node->side_b = false;
+    node->side = false;
     node->next = NULL;
     node->move = 0;
-    node->ind_a = INT32_MAX;
-    node->ind_b = INT32_MAX;
+    node->ind = 0;
     return node;
 }
 
-void add_to_stack(t_node *node, t_node **head){
+void set_stack_to_zero(t_node **stack)
+{
+    t_node *tmp;
+
+    if(*stack == NULL)
+        return ;
+    tmp = *stack;
+    while(tmp != NULL){
+        tmp->ind = 0;
+        tmp->move = 0;
+        tmp->side = false;
+        tmp = tmp->next ;
+    }
+    return ;
+}
+
+void add_to_stack(t_node *node, t_node **head)
+{
     t_node *tmp;
 
     if(*head == NULL){
@@ -31,11 +47,32 @@ void add_to_stack(t_node *node, t_node **head){
     return ;
 }
 
+void print(t_node *stack_a, t_node *stack_b)
+{
+   ft_printf("\n");
+    t_node *tmp = stack_a;
+    t_node *tmp1 = stack_b;
+    ft_printf("stack a :\n head \t");
+    while(tmp != NULL){
+        ft_printf("%d \t",tmp->data);
+        tmp = tmp->next;
+    }
+    ft_printf("\n----------------------\n");
+    /*stack a*/
+
+    /*stack b*/
+    ft_printf("stack b :\n head \t");
+    while(tmp1 != NULL){
+        ft_printf("%d \t",tmp1->data);
+        tmp1 = tmp1->next;
+    }
+    ft_printf("\n----------------------\n");
+}
+
 void push_swap(char **args)
 {
     t_node *stack_a ;
     t_node *stack_b ;
-    // t_node *best_node;
     int best_move;
 
     stack_a = fill_args(args);
@@ -43,84 +80,70 @@ void push_swap(char **args)
         return ;
     stack_b = NULL;
 
-    // pb(&stack_a, &stack_b);
-    // pb(&stack_a, &stack_b);
-
-    while(stack_a != NULL)
+    while(lstsize(stack_a) > 3)
     {
-        // stack_a = count_move_a(stack_a);
-        stack_a = count_move_b(stack_b, stack_a);
-        // best_move = INT32_MAX;
-        // tmp_a = stack_a;
-
-       /*  while(tmp_a != NULL)
-        {   
-            if(tmp_a->move < best_move)
-            {
-                best_move = tmp_a->move;
-                best_node = tmp_a;
-            }
-            tmp_a = tmp_a->next;
-        } */
-
-        // ft_printf("node %d , move %d\n",best_node->data, best_move);
-        // find best node in a , set it in head
-
-/*         if(best_node->side_a)
-        {   
-            best_move = best_node->ind_a - lstsize(stack_a);
-            while(best_move-- > 0)
-                rra(&stack_a);
+        set_stack_to_zero(&stack_a);
+        set_stack_to_zero(&stack_b);
+        stack_a->ind = count_move(stack_b, stack_a->data);
+        if(stack_a->ind == -1)
+            stack_a->ind = find_max_indice(stack_b);
+        if(stack_a->ind > lstsize(stack_b)/2 )
+        {
+            stack_a->side = true;
+            stack_a->move = lstsize(stack_b) - stack_a->ind ;
         }
         else
-        {
-            best_move = best_node->ind_a;
-            while(best_move-- > 0)
-                ra(&stack_a);
-        } */
-        
-
+            stack_a->move =  stack_a->ind ;
         best_move = stack_a->move;
-        ft_printf("best {%d} \n",best_move );
-        while(best_move-- > 0){
-            if(stack_a->side_b)
-                rrb(&stack_b);
+        while(best_move-- > 0)
+        {
+            if( stack_a->side )
+                rra_rrb(&stack_b, 'b');
             else
-                rb(&stack_b);
+                ra_rb(&stack_b,'b');
         }
-  
-        // set up stack b , to best position to push node from a
-
-        pb(&stack_a, &stack_b);
-        // tmp_a = tmp_a->next;
+        pa_pb(&stack_a, &stack_b,'b');
     }
-    
-    // now we should cunt moves in a and b
-    // to chose the best node to be pushed
 
- /*    sort_stack_b(&stack_a, &stack_b); */
+    sort_3_nbr(&stack_a);
 
-    // operate over stack b till it is Descending order head: max >>> min 
+    while(stack_b != NULL)
+    {
+        set_stack_to_zero(&stack_a);
+        set_stack_to_zero(&stack_b);
+        stack_b->ind = count_move_a(stack_a, stack_b->data);
+        if(stack_b->ind == -1)
+                stack_b->ind = find_min(stack_a);
+        if(stack_b->ind > lstsize(stack_a)/2 )
+        {
+            stack_b->side = true;
+            stack_b->move = lstsize(stack_a) - stack_b->ind ;
+        }
+        else
+            stack_b->move =  stack_b->ind ;
+        best_move = stack_b->move;
+        while(best_move-- > 0)
+        {
+            if( stack_b->side )
+                rra_rrb(&stack_a, 'a');
+            else
+                ra_rb(&stack_a, 'a');
+        }
+        pa_pb(&stack_b, &stack_a,'a');
 
-    /* int max_b_ind = find_max_indice(stack_b);
-    if(max_b_ind > lstsize(stack_b))
-    {   
-        max_b_ind = lstsize(stack_b) - max_b_ind;
-        while(max_b_ind-- > 0)
-            rrb(&stack_b);
+    }
+
+    best_move = find_min(stack_a);
+    if(best_move > lstsize(stack_a)/2 ){
+        best_move = lstsize(stack_a) - best_move;
+        while(best_move-- > 0)
+            rra_rrb(&stack_a,'a');
     }else{
-        while(max_b_ind-- > 0)
-            rb(&stack_b);
-    } */
-
-    // push back all sorted elements to a
-    /* while(stack_b != NULL){
-        pa(&stack_b, &stack_a);
-    } */
-
-    print(stack_a, stack_b);
+        while(best_move-- > 0)
+            ra_rb(&stack_a,'a');
+    }
     // free all allocaated nodes
-    /*  free_stack(stack_a); */
+    free_stack(stack_a);
 
     return ;
 }
@@ -140,24 +163,3 @@ int main(int argc, char **argv){
         
 }
 
-void print(t_node *stack_a, t_node *stack_b)
-{
-   ft_printf("\n");
-    t_node *tmp = stack_a;
-    t_node *tmp1 = stack_b;
-    ft_printf("stack a :\n head \t");
-    while(tmp != NULL){
-        ft_printf("%d \t",tmp->data, tmp->move);
-        tmp = tmp->next;
-    }
-    ft_printf("\n----------------------\n");
-    /*stack a*/
-
-    /*stack b*/
-    ft_printf("stack b :\n head \t");
-    while(tmp1 != NULL){
-        ft_printf("%d \t",tmp1->data);
-        tmp1 = tmp1->next;
-    }
-    ft_printf("\n----------------------\n");
-}

@@ -1,8 +1,8 @@
 #include"push_swap.h"
 
-void sort_stack_b(t_node **stack_a, t_node **stack_b)
+void sort_stack_b(t_node __unused  **stack_a, __unused t_node **stack_b)
 {
-    int move;
+   /*  int move;
 
     move = count_move_b(stack_b, (*stack_a)->data);
     if(move == -1 )
@@ -21,13 +21,13 @@ void sort_stack_b(t_node **stack_a, t_node **stack_b)
     else
     {
         if(move > (lstsize(*stack_b)/2) ){
-            (*stack_a)->side = true;
+            (*stack_a)->side_a = true;
             move = ( lstsize(*stack_b) - move);
         }else
-            (*stack_a)->side = false;
+            (*stack_a)->side_a = false;
     }
 
-    if((*stack_a)->side)
+    if((*stack_a)->side_a)
     {
         while(move-- > 0)
             rrb(stack_b);
@@ -36,7 +36,7 @@ void sort_stack_b(t_node **stack_a, t_node **stack_b)
             rb(stack_b);
     }
     pb(stack_a, stack_b);
-
+ */
     return;
 }
 
