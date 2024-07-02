@@ -1,7 +1,0 @@
-
-
-fill stack a
-
-loop over a an d push the right position    ...
-    count move in stack stack_b             done
-    count move in satck stack_a             
